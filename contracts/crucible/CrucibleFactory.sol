@@ -95,9 +95,9 @@ contract CrucibleFactory is Ownable, IFactory, IInstanceRegistry, ERC721 {
 
         string memory base = baseURI();
 
-        uint256 id;
+        uint256 chainId;
         assembly {
-            id := chainid()
+            chainId := chainid()
         }
 
         // concatenate the tokenID and chain id to the baseURI
