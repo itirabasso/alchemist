@@ -9,9 +9,9 @@ import {TransferHelper} from "@uniswap/lib/contracts/libraries/TransferHelper.so
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
 import {ERC721Holder} from "@openzeppelin/contracts/token/ERC721/ERC721Holder.sol";
 
-import {IAludel} from "./aludel/Aludel.sol";
-import {IUniversalVault} from "./crucible/Crucible.sol";
-import {IFactory} from "./factory/IFactory.sol";
+import {IAludel} from "../aludel/Aludel.sol";
+import {IUniversalVault} from "../crucible/Crucible.sol";
+import {IFactory} from "../factory/IFactory.sol";
 
 /// @title TransmuterV1
 contract TransmuterV1 is ERC721Holder {
