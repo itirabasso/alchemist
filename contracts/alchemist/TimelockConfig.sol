@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity ^0.8.0;
 pragma abicoder v2;
 
-import {EnumerableSet} from "@openzeppelin/contracts/utils/EnumerableSet.sol";
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 interface ITimelockConfig {
     /* data types */
@@ -87,14 +87,14 @@ contract TimelockConfig is ITimelockConfig {
     /* modifiers */
 
     modifier onlyAdmin() {
-        require(msg.sender == address(_config[ADMIN_CONFIG_ID]), "only admin");
+        require(msg.sender == address(uint160(_config[ADMIN_CONFIG_ID])), "only admin");
         _;
     }
 
     /* constructor */
 
     constructor(address admin, uint256 timelock) {
-        _setRawConfig(ADMIN_CONFIG_ID, uint256(admin));
+        _setRawConfig(ADMIN_CONFIG_ID, uint256(uint160(admin)));
         _setRawConfig(TIMELOCK_CONFIG_ID, timelock);
     }
 

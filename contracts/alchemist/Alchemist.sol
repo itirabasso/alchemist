@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity ^0.8.0;
 pragma abicoder v2;
 // pragma experimental SMTChecker;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
-import {ERC20Snapshot} from "@openzeppelin/contracts/token/ERC20/ERC20Snapshot.sol";
-import {ERC20Permit} from "@openzeppelin/contracts/drafts/ERC20Permit.sol";
+import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import {ERC20Snapshot} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
+import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import {TimelockConfig} from "./TimelockConfig.sol";
 
 interface IAlchemist {
@@ -63,7 +63,7 @@ contract Alchemist is
         uint256 epochStart
     ) TimelockConfig(admin, timelock) {
         // set config
-        TimelockConfig._setRawConfig(RECIPIENT_CONFIG_ID, uint256(recipient));
+        TimelockConfig._setRawConfig(RECIPIENT_CONFIG_ID, uint256(uint160(recipient)));
         TimelockConfig._setRawConfig(INFLATION_BPS_CONFIG_ID, inflationBps);
         TimelockConfig._setRawConfig(EPOCH_DURATION_CONFIG_ID, epochDuration);
 
@@ -108,11 +108,11 @@ contract Alchemist is
     /* view functions */
 
     function getAdmin() public view override returns (address admin) {
-        return address(TimelockConfig.getConfig(TimelockConfig.ADMIN_CONFIG_ID).value);
+        return address(uint160(TimelockConfig.getConfig(TimelockConfig.ADMIN_CONFIG_ID).value));
     }
 
     function getRecipient() public view override returns (address recipient) {
-        return address(TimelockConfig.getConfig(RECIPIENT_CONFIG_ID).value);
+        return address(uint160(TimelockConfig.getConfig(RECIPIENT_CONFIG_ID).value));
     }
 
     function getTimelock() public view override returns (uint256 timelock) {
