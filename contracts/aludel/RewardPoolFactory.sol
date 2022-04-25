@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity 0.7.6;
+pragma solidity ^0.8.4;
 
-import {EnumerableSet} from "@openzeppelin/contracts/utils/EnumerableSet.sol";
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 import {IFactory} from "../factory/IFactory.sol";
 import {InstanceRegistry} from "../factory/InstanceRegistry.sol";

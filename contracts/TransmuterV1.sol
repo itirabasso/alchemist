@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity 0.7.6;
+pragma solidity ^0.8.4;
 pragma abicoder v2;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import {IERC20Permit} from "@openzeppelin/contracts/drafts/IERC20Permit.sol";
+import {IERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import {TransferHelper} from "@uniswap/lib/contracts/libraries/TransferHelper.sol";
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
-import {ERC721Holder} from "@openzeppelin/contracts/token/ERC721/ERC721Holder.sol";
+import {ERC721Holder} from "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 
 import {IAludel} from "./aludel/Aludel.sol";
 import {IUniversalVault} from "./crucible/Crucible.sol";
@@ -28,7 +28,7 @@ contract TransmuterV1 is ERC721Holder {
         // get staking token
         address stakingToken = IAludel(aludel).getAludelData().stakingToken;
         // transfer ownership
-        IERC721(crucibleFactory).safeTransferFrom(address(this), crucibleOwner, uint256(vault));
+        IERC721(crucibleFactory).safeTransferFrom(address(this), crucibleOwner, uint256(uint160(vault)));
         // transfer tokens
         TransferHelper.safeTransferFrom(stakingToken, msg.sender, vault, amount);
         // stake
@@ -56,7 +56,7 @@ contract TransmuterV1 is ERC721Holder {
         // create vault
         vault = IFactory(crucibleFactory).create2("", salt);
         // transfer ownership
-        IERC721(crucibleFactory).safeTransferFrom(address(this), crucibleOwner, uint256(vault));
+        IERC721(crucibleFactory).safeTransferFrom(address(this), crucibleOwner, uint256(uint160(vault)));
         // permit and stake
         permitAndStake(aludel, vault, permit, permission);
         // return vault

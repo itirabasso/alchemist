@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity 0.7.6;
+pragma solidity ^0.8.4;
 
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
@@ -22,6 +22,6 @@ contract OwnableERC721 {
     }
 
     function owner() public view virtual returns (address ownerAddress) {
-        return IERC721(_nftAddress).ownerOf(uint256(address(this)));
+        return IERC721(_nftAddress).ownerOf(uint256(uint160(address(this))));
     }
 }
